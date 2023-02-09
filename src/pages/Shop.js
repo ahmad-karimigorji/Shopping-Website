@@ -1,8 +1,23 @@
+import {
+  useCart,
+  useCartDispatcher,
+} from "../context/CartProvider/CartProvider";
 import { productsData } from "../data";
+import { addToCart, removeFromCart } from "../context/CartProvider/cartActions";
 
 const Shop = () => {
+  const dispatch = useCartDispatcher();
+  const { cart } = useCart();
+  console.log(cart);
+
+  const addToCartHandler = (product) => {
+    dispatch(addToCart(product));
+  };
+  const removeFromCartHandler = (product) => {
+    dispatch(removeFromCart(product))
+  }
+
   const products = productsData;
-  console.log(products);
   return (
     <section className="">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,290px))] justify-center gap-y-10 gap-x-6">
@@ -14,7 +29,21 @@ const Shop = () => {
                 <p>{product.name}</p>
                 <p className="text-indigo-600">$ {product.price}</p>
               </div>
-              <button className="bg-indigo-600 rounded-md text-white px-2 py-1.5">Add To Cart</button>
+              {cart.some((item) => item.id === product.id) ? (
+                <button
+                  className="border border-indigo-600 rounded-md text-indigo-600 px-2 py-1"
+                  onClick={() => removeFromCartHandler(product)}
+                >
+                   remove
+                </button>
+              ) : (
+                <button
+                  className="bg-indigo-600 rounded-md text-white px-2 py-1.5"
+                  onClick={() => addToCartHandler(product)}
+                >
+                  Add To Cart
+                </button>
+              )}
             </div>
           </div>
         ))}
