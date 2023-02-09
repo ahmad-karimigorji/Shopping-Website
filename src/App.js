@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import CartProvider from "./context/CartProvider/CartProvider";
 import Layout from "./pages/Layout";
 import Shop from "./pages/Shop";
 
@@ -10,17 +11,19 @@ const router = createBrowserRouter([
     errorElement: <div>NOT FOUND / 404</div>,
     children: [
       {
-         errorElement: <div>NOT FOUND / 404</div> ,
-      children: [
-        { path: "shop", element: <Shop /> },
-      ],
-      }
+        errorElement: <div>NOT FOUND / 404</div>,
+        children: [{ path: "shop", element: <Shop /> }],
+      },
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
 }
 
 export default App;
