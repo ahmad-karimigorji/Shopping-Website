@@ -4,6 +4,7 @@ import {
 } from "../context/CartProvider/CartProvider";
 import { productsData } from "../data";
 import { addToCart, removeFromCart } from "../context/CartProvider/cartActions";
+import { toast } from "react-toastify";
 
 const Shop = () => {
   const dispatch = useCartDispatcher();
@@ -12,10 +13,11 @@ const Shop = () => {
 
   const addToCartHandler = (product) => {
     dispatch(addToCart(product));
+    toast.success(`${product.name} added to cart !`);
   };
   const removeFromCartHandler = (product) => {
-    dispatch(removeFromCart(product))
-  }
+    dispatch(removeFromCart(product));
+  };
 
   const products = productsData;
   return (
@@ -34,7 +36,7 @@ const Shop = () => {
                   className="border border-indigo-600 rounded-md text-indigo-600 px-2 py-1"
                   onClick={() => removeFromCartHandler(product)}
                 >
-                   remove
+                  remove
                 </button>
               ) : (
                 <button
