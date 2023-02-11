@@ -9,12 +9,12 @@ const reducer = (state, action) => {
         const product = { ...products[index] };
         product.quantity++;
         products[index] = product;
-        return { ...state, cart: products, total: state.tatal + payLoad.price };
+        return { ...state, cart: products, total: state.total + payLoad.offPrice };
       }
       //add product
       payLoad.quantity = 1;
       products.unshift(payLoad);
-      return { ...state, cart: products, total: state.tatal + payLoad.price };
+      return { ...state, cart: products, total: state.total + payLoad.offPrice };
     }
     case "REMOVE_FROM_CART": {
       const products = [...state.cart];
@@ -29,14 +29,14 @@ const reducer = (state, action) => {
         return {
           ...state,
           cart: filteredroducts,
-          total: state.tatal - payLoad.price,
+          total: state.total - payLoad.offPrice,
         };
       }
       //updata quantity
       product.quantity--;
       products[index] = product;
 
-      return { ...state, cart: products, total: state.tatal + payLoad.price };
+      return { ...state, cart: products, total: state.total - payLoad.offPrice };
     }
     default:
       break;
