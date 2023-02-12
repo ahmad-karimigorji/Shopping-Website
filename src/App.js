@@ -4,6 +4,7 @@ import CartProvider from "./context/CartProvider/CartProvider";
 import CartPage from "./pages/CartPage";
 import Layout from "./pages/Layout";
 import Shop from "./pages/Shop";
+import SignupPage from "./pages/SignupPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
         children: [
           { path: "shop", element: <Shop /> },
           { path: "cart", element: <CartPage /> },
+          { path: "signup", element: <SignupPage /> },
         ],
       },
     ],
