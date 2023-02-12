@@ -19,6 +19,7 @@ const MyTextInput = ({ label, ...props }) => {
             type={isShow ? "text" : "password"}
           />
           <button
+            type="button"
             onClick={() => setIsShow(!isShow)}
             className="absolute top-1/2 -translate-y-1/2 right-0 p-2 outline-none text-gray-500 text-sm"
           >
@@ -32,7 +33,9 @@ const MyTextInput = ({ label, ...props }) => {
           {...props}
         />
       )}
-      {meta.touched && meta.error ? <div className="text-red-400 text-xs">{meta.error}</div> : null}
+      {meta.touched && meta.error ? (
+        <div className="text-red-400 text-xs">{meta.error}</div>
+      ) : null}
     </div>
   );
 };
