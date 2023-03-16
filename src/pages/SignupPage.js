@@ -1,7 +1,11 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../component/formikInput/MyTextInput";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { signupUser } from "../services/signupService";
+import { useEffect, useState } from "react";
+import { useQuery } from "../hooks/useQuery";
+import { useAuth } from "../context/AuthProvider/AuthProvider";
 
 const initialValues = {
   name: "",
@@ -34,12 +38,45 @@ const validationSchema = Yup.object({
 });
 
 const SignupPage = () => {
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const redirect = useQuery("redirect") || "/";
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth) {
+      navigate(redirect);
+    }
+  }, []);
+
+  const onSubmit = async (values) => {
+    const { name, email, phoneNumber, password } = values;
+    const userData = {
+      name,
+      email,
+      phoneNumber,
+      password,
+    };
+    try {
+      const { data } = await signupUser(userData);
+      console.log(data);
+      setError(null);
+      navigate(redirect === "/" ? "/login" : `/login?redirect=${redirect}`);
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.data.message) {
+        setError(error.response.data.message);
+      }
+    }
+  };
+
   return (
     <div className="w-[300px] sm:w-[350px] mx-auto">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         validateOnMount={true}
+        onSubmit={onSubmit}
       >
         {({ isValid }) => (
           <Form className="w-full px-2 space-y-3">
@@ -73,7 +110,7 @@ const SignupPage = () => {
               type="password"
               placeholder="*****"
             />
-            <div>
+            <div className="flex flex-col">
               <button
                 type="submit"
                 disabled={!isValid}
@@ -81,7 +118,17 @@ const SignupPage = () => {
               >
                 sign
               </button>
-            <NavLink to="/login" className="text-indigo-600 inline-block mt-1.5 py-1 text-sm">Already login?</NavLink>
+              {error && (
+                <p className="text-red-400 inline-block mt-1.5 text-sm">
+                  {error}
+                </p>
+              )}
+              <NavLink
+                to={redirect === "/" ? "/login" : `/login?redirect=${redirect}`}
+                className="text-indigo-600 inline-block mt-1.5 py-1 text-sm"
+              >
+                Already login?
+              </NavLink>
             </div>
           </Form>
         )}
