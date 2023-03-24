@@ -8,7 +8,7 @@ const MySelect = ({ label, ...props }) => {
         {label}
       </label>
       <select
-        className="border px-2 py-1.5 focus:outline-indigo-600 rounded-md"
+        className="border px-2 py-1.5 focus:outline-indigo-600 rounded"
         {...field}
         {...props}
       />

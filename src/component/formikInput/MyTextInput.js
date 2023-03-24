@@ -11,9 +11,9 @@ const MyTextInput = ({ label, ...props }) => {
         {label}
       </label>
       {props.type === "password" ? (
-        <div className="flex relative overflow-hidden rounded-md">
+        <div className="flex relative overflow-hidden rounded">
           <input
-            className="w-full border pl-2 pr-8 py-1.5 focus:outline-gray-300 rounded-md"
+            className="w-full border pl-2 pr-8 py-1.5 focus:outline-indigo-600 rounded"
             {...field}
             {...props}
             type={isShow ? "text" : "password"}
@@ -28,7 +28,7 @@ const MyTextInput = ({ label, ...props }) => {
         </div>
       ) : (
         <input
-          className="border px-2 py-1.5 focus:outline-gray-300 rounded-md"
+          className="border px-2 py-1.5 focus:outline-indigo-600 rounded"
           {...field}
           {...props}
         />

@@ -114,7 +114,7 @@ const SignupPage = () => {
               <button
                 type="submit"
                 disabled={!isValid}
-                className="w-full bg-indigo-600 text-white rounded-md mt-4 px-3 py-1.5 disabled:bg-gray-300"
+                className="w-full bg-indigo-600 text-white rounded mt-4 px-3 py-1.5 disabled:bg-gray-300"
               >
                 sign
               </button>
