@@ -6,6 +6,7 @@ import { signupUser } from "../services/signupService";
 import { useEffect, useState } from "react";
 import { useQuery } from "../hooks/useQuery";
 import { useAuth } from "../context/AuthProvider/AuthProvider";
+import LoadingButton from "../component/loading/LoadingButton";
 
 const initialValues = {
   name: "",
@@ -39,6 +40,7 @@ const validationSchema = Yup.object({
 
 const SignupPage = () => {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const redirect = useQuery("redirect") || "/";
   const auth = useAuth();
@@ -50,6 +52,7 @@ const SignupPage = () => {
   }, []);
 
   const onSubmit = async (values) => {
+    setLoading(true);
     const { name, email, phoneNumber, password } = values;
     const userData = {
       name,
@@ -60,9 +63,11 @@ const SignupPage = () => {
     try {
       const { data } = await signupUser(userData);
       console.log(data);
+      setLoading(false);
       setError(null);
       navigate(redirect === "/" ? "/login" : `/login?redirect=${redirect}`);
     } catch (error) {
+      setLoading(false);
       console.log(error.response);
       if (error.response.data.message) {
         setError(error.response.data.message);
@@ -71,7 +76,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="w-[300px] sm:w-[350px] mx-auto">
+    <div className="w-full max-w-[450px] mx-auto">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -114,9 +119,9 @@ const SignupPage = () => {
               <button
                 type="submit"
                 disabled={!isValid}
-                className="w-full bg-indigo-600 text-white rounded mt-4 px-3 py-1.5 disabled:bg-gray-300"
+                className="w-full flex justify-center items-center bg-indigo-600 text-white rounded mt-4 px-3 py-1.5 disabled:bg-gray-300"
               >
-                sign
+                {loading && <LoadingButton />} sign
               </button>
               {error && (
                 <p className="text-red-400 inline-block mt-1.5 text-sm">

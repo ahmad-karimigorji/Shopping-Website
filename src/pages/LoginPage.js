@@ -6,6 +6,7 @@ import { loginUser } from "../services/loginService";
 import { useState } from "react";
 import { useAuthActions } from "../context/AuthProvider/AuthProvider";
 import { useQuery } from "../hooks/useQuery";
+import LoadingButton from "../component/loading/LoadingButton";
 
 const initialValues = {
   email: "",
@@ -26,26 +27,29 @@ const validationSchema = Yup.object({
 
 const LoginPage = () => {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const setAuth = useAuthActions();
   const redirect = useQuery("redirect") || "/";
 
   const onSubmit = async (values) => {
+    setLoading(true);
     try {
       const { data } = await loginUser(values);
+      setLoading(false);
       setAuth(data);
-      console.log(data);
       setError(null);
       navigate(redirect);
     } catch (error) {
       console.log(error);
+      setLoading(false);
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       }
     }
   };
   return (
-    <div className="w-[300px] sm:w-[350px] mx-auto">
+    <div className="w-full max-w-[450px] mx-auto">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -70,9 +74,9 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={!isValid}
-                className="w-full bg-indigo-600 text-white rounded mt-4 px-3 py-1.5 disabled:bg-gray-300"
+                className="w-full bg-indigo-600 text-white rounded mt-4 px-3 py-1.5 flex justify-center items-center disabled:bg-gray-300"
               >
-                login
+                {loading && <LoadingButton />} login
               </button>
               {error && (
                 <p className="text-red-400 inline-block mt-1.5 text-sm">
