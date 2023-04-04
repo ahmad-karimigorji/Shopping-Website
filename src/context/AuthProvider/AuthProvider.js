@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("state", state);
     if(state){
     const data = JSON.stringify(state);
     localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, data);

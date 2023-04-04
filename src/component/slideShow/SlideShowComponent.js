@@ -48,7 +48,7 @@ const SlideShowComponent = () => {
         className="h-[500px] w-full max-w-[1124px] overflow-hidden"
       >
         {slideShowItem.map((item) => (
-          <SwiperSlide>
+          <SwiperSlide key={item.id}>
             <div className="h-full flex flex-col justify-center items-center min-[480px]:flex-row min-[480px]:justify-evenly px-4">
               <img
                 className="w-[260px] sm:w-[320px] md:w-[370px]"

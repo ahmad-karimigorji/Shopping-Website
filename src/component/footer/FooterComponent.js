@@ -122,9 +122,9 @@ const FooterComponent = () => {
               placeholder="Email"
               className="grow outline-none p-2 bg-transparent"
             />
-            <botton className="bg-indigo-600 text-white px-3 py-2 rounded cursor-pointer">
+            <button className="bg-indigo-600 text-white px-3 py-2 rounded cursor-pointer">
               SEND
-            </botton>
+            </button>
           </div>
         </div>
       </div>
