@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
+
+body {
+  @apply bg-slate-50;
+}
+#featuredProducts .swiper-button-next,
+#featuredProducts .swiper-button-prev {
+  @apply top-[95%] scale-[.6] w-[50px];
+}
+#featuredProducts .swiper-button-prev {
+  left: calc(50% - 50px);
+}
+#featuredProducts .swiper-button-next {
+  right: calc(50% - 50px);
+}
 @tailwind utilities;
